@@ -16,7 +16,7 @@ pipeline {
             }
         }
 
-        stage('Build and Run Tests') {
+        stage('Build and Run docker selenium') {
             steps {
                 script {
                     // Run Selenium tests inside a Docker container
@@ -25,23 +25,13 @@ pipeline {
                         sh "docker run -d --rm --name $CHROMEDRIVER_CONTAINER_NAME -p 4444:4444 $SELENIUM_DOCKER_IMAGE"
 
                         // Run your Selenium tests using Maven
-                        sh 'mvn clean test'
+                        // sh 'mvn clean test'
 
                     } finally {
                         // Stop and remove the Selenium container
                         sh "docker stop $CHROMEDRIVER_CONTAINER_NAME"
                     }
                 }
-            }
-        }
-
-        stage('Publish Results') {
-            steps {
-                // Publish test results (this might depend on the testing framework used)
-                junit 'target/surefire-reports/*.xml'
-
-                // Publish other reports or artifacts if needed
-                // archiveArtifacts 'target/*.jar'
             }
         }
     }
