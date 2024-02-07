@@ -46,10 +46,4 @@ pipeline {
             }
         }
     }
-
-    post {
-        always {
-            // Clean up resources or do post-build actions if necessary
-        }
-    }
 }
